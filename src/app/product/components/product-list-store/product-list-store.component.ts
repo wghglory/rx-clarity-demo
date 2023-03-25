@@ -1,4 +1,6 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { Product } from '../../models/product.model';
+import { ProductListStore } from './product-list.store';
 
 @Component({
   selector: 'app-product-list-store',
@@ -8,10 +10,35 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
       :host {
         display: block;
       }
-    `
+    `,
   ],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  providers: [ProductListStore],
 })
-export class ProductListStoreComponent {
+export class ProductListStoreComponent implements OnInit {
+  constructor(public store: ProductListStore) {}
 
+  openEditDialog = false;
+  openDeleteDialog = false;
+  selected: Product | undefined;
+
+  vm$ = this.store.vm$;
+
+  editProduct(selected: Product) {
+    this.openEditDialog = true;
+    this.selected = selected;
+  }
+
+  deleteProduct(selected: Product) {
+    this.openDeleteDialog = true;
+    this.selected = selected;
+  }
+
+  trackByFn(index: number, item: Product) {
+    return item.id;
+  }
+
+  ngOnInit() {
+    this.store.getProducts();
+  }
 }

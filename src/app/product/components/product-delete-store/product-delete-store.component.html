@@ -1,1 +1,14 @@
-<p>product-delete-store works!</p>
+<clr-modal [clrModalOpen]="(vm$ | async)?.openDialog === true"  (clrModalOpenChange)="close()">
+  <h3 class="modal-title">Delete Product</h3>
+  <div class="modal-body">
+    <p cds-text>
+      Are you sure delete product <strong>{{ selected?.name }}</strong> date {{ selected?.lastModified }} ?
+    </p>
+
+    <app-alert data-testid="alert" *ngIf="(vm$ | async)?.error as error" [error]="error"></app-alert>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline" (click)="close()">Cancel</button>
+    <button type="button" class="btn btn-primary" [clrLoading]="(vm$ | async)?.loading === true" (click)="confirm()">Confirm</button>
+  </div>
+</clr-modal>

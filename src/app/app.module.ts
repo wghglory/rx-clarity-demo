@@ -7,10 +7,11 @@ import { RouterModule } from '@angular/router';
 import { routes } from './app.routes';
 import { ClarityIcons, vmBugIcon } from '@cds/core/icon';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [AppComponent],
-  imports: [BrowserModule, BrowserAnimationsModule, ClarityModule, RouterModule.forRoot(routes)],
+  imports: [BrowserModule, BrowserAnimationsModule, HttpClientModule, ClarityModule, RouterModule.forRoot(routes)],
   providers: [],
   bootstrap: [AppComponent],
 })

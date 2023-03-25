@@ -1,5 +1,12 @@
 <clr-tabs>
   <clr-tab>
+    <button clrTabLink>ComponentStore</button>
+    <clr-tab-content *clrIfActive>
+      <app-product-list-store class="p-4"></app-product-list-store>
+    </clr-tab-content>
+  </clr-tab>
+
+  <clr-tab>
     <button clrTabLink>Regular Reactive</button>
     <clr-tab-content *clrIfActive>
       <app-product-list class="p-4"></app-product-list>
