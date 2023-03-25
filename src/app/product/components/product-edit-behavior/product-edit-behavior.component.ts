@@ -1,16 +1,17 @@
-import { Product } from './../../models/product.model';
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Product } from '../../models/product.model';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
 import { api } from '@shared/operators/api.operator';
 import { share, Subject, switchMap, tap } from 'rxjs';
-import { ProductService } from '../../services/product.service';
+import { ProductBehaviorService } from '../../services/product-behavior.service';
 
 @Component({
-  selector: 'app-product-edit',
-  templateUrl: './product-edit.component.html',
-  styleUrls: ['./product-edit.component.scss'],
+  selector: 'app-product-edit-behavior',
+  templateUrl: './product-edit-behavior.component.html',
+  styleUrls: ['./product-edit-behavior.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ProductEditComponent {
-  constructor(public productService: ProductService) {}
+export class ProductEditBehaviorComponent {
+  constructor(public productService: ProductBehaviorService) {}
 
   @Input() selected: Product | undefined = undefined;
   @Input() open = false;

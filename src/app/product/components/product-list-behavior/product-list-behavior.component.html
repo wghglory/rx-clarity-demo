@@ -1,6 +1,8 @@
 <p cds-text class="my-6 text-2xl">GET collection --> PATCH one and update if success. But no re-GET.</p>
 
 <ng-container *ngIf="products$ | async as apiResult">
+  <app-spinner *ngIf="apiResult.loading"></app-spinner>
+
   <div class="grid grid-cols-3 gap-6">
     <div *ngFor="let product of apiResult.data; trackBy: trackByFn" class="card mt-0 flex flex-col">
       <h3 class="card-header">
@@ -21,8 +23,8 @@
 </ng-container>
 
 <!-- ----------------------------------- modal----------------------------------- -->
-<app-product-edit *ngIf="openEditDialog" [(open)]="openEditDialog" [selected]="selected"></app-product-edit>
-<app-product-delete *ngIf="openDeleteDialog" [(open)]="openDeleteDialog" [selected]="selected"></app-product-delete>
+<app-product-edit-behavior *ngIf="openEditDialog" [(open)]="openEditDialog" [selected]="selected"></app-product-edit-behavior>
+<app-product-delete-behavior *ngIf="openDeleteDialog" [(open)]="openDeleteDialog" [selected]="selected"></app-product-delete-behavior>
 
 <!-- ----------------------------------- api----------------------------------- -->
 <ng-container *ngIf="trigger$ | async"></ng-container>

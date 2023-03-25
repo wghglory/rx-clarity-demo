@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { ApiQuery } from '@shared/models/api-query.model';
-import { BehaviorSubject, catchError, delay, EMPTY, Observable, of, tap, concatMap } from 'rxjs';
+import { BehaviorSubject, catchError, delay, EMPTY, Observable, of, tap } from 'rxjs';
 import { Product } from '../models/product.model';
 import { HttpClient } from '@angular/common/http';
 
@@ -11,7 +11,7 @@ const defaultState: ApiQuery<Product[]> = {
 };
 
 @Injectable()
-export class ProductService {
+export class ProductBehaviorService {
   private productSource = new BehaviorSubject<ApiQuery<Product[]>>(defaultState);
   products$ = this.productSource.asObservable();
 
@@ -49,12 +49,14 @@ export class ProductService {
         this.productSource.next({
           ...this.state,
           data: products,
+          loading: false,
         }),
       ),
       catchError(error => {
         this.productSource.next({
           ...this.state,
           error,
+          loading: false,
         });
         return EMPTY;
       }),
