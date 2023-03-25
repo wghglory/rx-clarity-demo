@@ -1,4 +1,4 @@
-<p cds-text class="my-6 text-2xl">GET collection --> PATCH one and update if success. But no re-GET.</p>
+<p cds-text class="my-6 text-2xl">GET collection and mutate one without refetch. Using behaviorSubject to store list</p>
 
 <ng-container *ngIf="products$ | async as apiResult">
   <app-spinner *ngIf="apiResult.loading"></app-spinner>
