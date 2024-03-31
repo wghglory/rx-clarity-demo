@@ -31,7 +31,6 @@ export class VehicleListComponent {
     switchMap(() => this.vehicleService.vehicles$.pipe(createAsyncState())),
     share(),
   );
-  selectedVehicle$ = this.vehicleService.selectedVehicle$;
 
   total$ = this.vehiclesState$.pipe(
     filter(state => Boolean(state.data)),

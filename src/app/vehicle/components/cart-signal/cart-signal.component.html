@@ -1,0 +1,62 @@
+<div class="@container">
+  <h2>Cart</h2>
+  <div class="grid @2xl:grid-cols-3 @xl:grid-cols-2 gap-5 p-3 mt-3">
+    @for (item of cartItems(); track $index) {
+      <div class="card !mt-0">
+        <div class="card-block space-y-4">
+          <dl class="grid grid-cols-2 gap-2 items-center">
+            <dt>Name</dt>
+            <dd>
+              {{ item.vehicle.name }}
+            </dd>
+            <dt>Unit Price</dt>
+            <dd>
+              {{ item.vehicle.cost_in_credits | currency: 'USD' }}
+            </dd>
+            <dt>Class</dt>
+            <dd>
+              {{ item.vehicle.vehicle_class }}
+            </dd>
+            <dt><label for="quantity-{{ $index }}">Quantity</label></dt>
+            <dd class="clr-input-wrapper">
+              <input
+                type="number"
+                name="quantity"
+                id="quantity-{{ $index }}"
+                class="clr-input w-25"
+                [(ngModel)]="item.quantity"
+                min="1"
+                max="1000"
+                (change)="onQuantityChanged(item, $any($event.target).value)"
+              />
+            </dd>
+            <dt>Cost</dt>
+            <dd>
+              {{ item.quantity * item.vehicle.cost_in_credits | currency: 'USD' }}
+            </dd>
+          </dl>
+
+          <button class="btn-sm btn-outline btn" (click)="onRemove(item)">Remove</button>
+        </div>
+      </div>
+    }
+  </div>
+
+  @if (cartItems().length) {
+    <div class="space-y-5">
+      <h3>Cart Total</h3>
+      <dl class="grid grid-cols-[1fr_3fr] gap-3">
+        <dt>Subtotal</dt>
+        <dd>{{ subTotal() | currency: 'USD' }}</dd>
+        <dt>Delivery</dt>
+        <dd>{{ deliveryFee() | currency: 'USD' }}</dd>
+        <dt>Estimated Tax</dt>
+        <dd>{{ tax() | currency: 'USD' }}</dd>
+        <dt>Total</dt>
+        <dd>{{ totalPrice() | currency: 'USD' }}</dd>
+      </dl>
+    </div>
+  } @else {
+    <p>No items in cart</p>
+  }
+</div>

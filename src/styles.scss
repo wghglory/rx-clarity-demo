@@ -6,3 +6,7 @@
 @import '../node_modules/@cds/core/global.min.css';
 @import '../node_modules/@cds/core/styles/theme.dark.min.css';
 @import '../node_modules/@clr/ui/clr-ui.min.css';
+
+clr-datagrid .datagrid {
+  overflow-y: hidden !important;
+}

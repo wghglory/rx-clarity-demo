@@ -1,0 +1,46 @@
+<div class="flex gap-9 items-start py-5">
+  <section class="space-y-2">
+    <h2>
+      Vehicles
+      <button class="btn btn-outline ml-6" (click)="refresh()">Refresh</button>
+    </h2>
+
+    <clr-datagrid class="min-w-[700px] max-w-[900px]" (clrDgRefresh)="refreshDg($event)" [clrDgLoading]="vehiclesState()?.loading === true">
+      <clr-dg-column>Name</clr-dg-column>
+      <clr-dg-column>Model</clr-dg-column>
+      <clr-dg-column>Price</clr-dg-column>
+
+      <clr-dg-placeholder>No data found</clr-dg-placeholder>
+
+      @for (vehicle of vehiclesState()?.data; track $index) {
+        <clr-dg-row [clrDgItem]="vehicle">
+          <clr-dg-cell>{{ vehicle.name }}</clr-dg-cell>
+          <clr-dg-cell>{{ vehicle.model }}</clr-dg-cell>
+          <clr-dg-cell>{{ vehicle.cost_in_credits | currency: 'USD' }}</clr-dg-cell>
+        </clr-dg-row>
+      }
+      <ng-template clrIfDetail let-detail (clrIfDetailChange)="selectVehicle($event)">
+        <clr-dg-detail>
+          <clr-dg-detail-header>{{ detail.name }}</clr-dg-detail-header>
+          <clr-dg-detail-body>
+            <!-- demo a way that not passing down the selected vehicle -->
+            <app-vehicle-detail-signal />
+          </clr-dg-detail-body>
+        </clr-dg-detail>
+      </ng-template>
+
+      <clr-dg-footer>
+        {{ pagination.firstItem + 1 }} - {{ pagination.lastItem + 1 }} of {{ total() }} items
+        <clr-dg-pagination #pagination [clrDgPageSize]="10" [clrDgTotalItems]="total() || 0" />
+      </clr-dg-footer>
+    </clr-datagrid>
+
+    @if (vehiclesState()?.error; as error) {
+      <clx-alert [error]="error" />
+    }
+  </section>
+
+  <section class="flex-1">
+    <app-cart-signal />
+  </section>
+</div>
