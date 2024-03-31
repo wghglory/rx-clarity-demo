@@ -1,0 +1,39 @@
+@if (vehicle$ | async; as vehicle) {
+  <table class="table table-vertical">
+    <tbody>
+      <tr>
+        <th>Name</th>
+        <td>{{ vehicle.name }}</td>
+        <!-- <button class="btn btn-primary" (click)="addToCart(vehicle)">Add to Cart</button> -->
+      </tr>
+      <tr>
+        <th>Classification</th>
+        <td>{{ vehicle.vehicle_class }}</td>
+      </tr>
+      <tr>
+        <th>Price (in credits)</th>
+        <td>{{ vehicle.cost_in_credits | number: '1.2-2' }}</td>
+      </tr>
+      <tr>
+        <th>Crew</th>
+        <td>{{ vehicle.crew }}</td>
+      </tr>
+      <tr>
+        <th>Passengers</th>
+        <td>{{ vehicle.passengers }}</td>
+      </tr>
+      <tr>
+        <th>Cargo Capacity</th>
+        <td>{{ vehicle.cargo_capacity }}</td>
+      </tr>
+      <tr>
+        <th>Films</th>
+        <td class="space-x-1">
+          @for (film of vehicleFilms$ | async; track $index) {
+            <span class="label">{{ film.title }}</span>
+          }
+        </td>
+      </tr>
+    </tbody>
+  </table>
+}
