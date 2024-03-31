@@ -8,12 +8,13 @@ import { StandaloneModule } from 'src/app/shared/standalone.module';
 
 import { Vehicle } from '../../models/vehicle.model';
 import { VehicleService } from '../../services/vehicle.service';
+import { CartComponent } from '../cart/cart.component';
 import { VehicleDetailComponent } from '../vehicle-detail/vehicle-detail.component';
 
 @Component({
   selector: 'app-vehicle-list',
   standalone: true,
-  imports: [StandaloneModule, AlertComponent, VehicleDetailComponent],
+  imports: [StandaloneModule, AlertComponent, VehicleDetailComponent, CartComponent],
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './vehicle-list.component.html',
   styleUrl: './vehicle-list.component.scss',

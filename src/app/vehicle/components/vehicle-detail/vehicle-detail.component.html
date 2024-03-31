@@ -1,18 +1,21 @@
 @if (vehicle$ | async; as vehicle) {
+  <button class="btn btn-primary btn-sm !mx-0" (click)="addToCart(vehicle)">Add to Cart</button>
+
   <table class="table table-vertical">
     <tbody>
       <tr>
         <th>Name</th>
-        <td>{{ vehicle.name }}</td>
-        <!-- <button class="btn btn-primary" (click)="addToCart(vehicle)">Add to Cart</button> -->
+        <td>
+          {{ vehicle.name }}
+        </td>
       </tr>
       <tr>
         <th>Classification</th>
         <td>{{ vehicle.vehicle_class }}</td>
       </tr>
       <tr>
-        <th>Price (in credits)</th>
-        <td>{{ vehicle.cost_in_credits | number: '1.2-2' }}</td>
+        <th>Unit Price</th>
+        <td>{{ vehicle.cost_in_credits | currency: 'USD' }}</td>
       </tr>
       <tr>
         <th>Crew</th>
