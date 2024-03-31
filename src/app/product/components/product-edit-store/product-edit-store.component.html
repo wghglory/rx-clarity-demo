@@ -5,7 +5,7 @@
       Are you sure update product <strong>{{ selected?.name }}</strong> date {{ selected?.lastModified }} ?
     </p>
 
-    <app-alert data-testid="alert" *ngIf="(vm$ | async)?.error as error" [error]="error"></app-alert>
+    <clx-alert *ngIf="(vm$ | async)?.error as error" [error]="error"></clx-alert>
   </div>
   <div class="modal-footer">
     <button type="button" class="btn btn-outline" (click)="close()">Cancel</button>

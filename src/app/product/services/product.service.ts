@@ -1,19 +1,22 @@
-import { Injectable } from '@angular/core';
-import { BehaviorSubject, catchError, delay, EMPTY, Observable, of, tap } from 'rxjs';
-import { Product } from '../models/product.model';
 import { HttpClient } from '@angular/common/http';
+import { inject, Injectable } from '@angular/core';
+import { BehaviorSubject, delay, Observable, of } from 'rxjs';
+
+import { Product } from '../models/product.model';
+
+type ActionType = 'update' | 'delete';
 
 @Injectable()
 export class ProductService {
+  private http = inject(HttpClient);
+
   // record the item to be mutated
-  private mutateProduct = new BehaviorSubject<{ type: 'update' | 'delete'; product: Product } | undefined>(undefined);
-  mutate$ = this.mutateProduct.asObservable();
+  private mutatedProductBS = new BehaviorSubject<{ type: ActionType; product: Product } | null>(null);
+  mutate$ = this.mutatedProductBS.asObservable();
 
-  setProduct(payload: { type: 'update' | 'delete'; product: Product }) {
-    this.mutateProduct.next(payload);
+  setProduct(payload: { type: ActionType; product: Product }) {
+    this.mutatedProductBS.next(payload);
   }
-
-  constructor(private http: HttpClient) {}
 
   getProducts(): Observable<Product[]> {
     // return this.http.get<Product[]>('/api/products').pipe(
@@ -43,6 +46,7 @@ export class ProductService {
     );
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   deleteProduct(product: Product) {
     // return this.http.delete<Product>(`/api/products/${product.id}`).pipe(
     return of(null).pipe(

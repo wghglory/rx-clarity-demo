@@ -1,33 +1,32 @@
-import { Injectable } from '@angular/core';
-import { ApiQuery } from '@shared/models/api-query.model';
-import { BehaviorSubject, catchError, delay, EMPTY, Observable, of, tap } from 'rxjs';
-import { Product } from '../models/product.model';
 import { HttpClient } from '@angular/common/http';
+import { inject, Injectable } from '@angular/core';
+import { AsyncState } from 'ngx-extension';
+import { BehaviorSubject, catchError, delay, EMPTY, Observable, of, tap } from 'rxjs';
 
-const defaultState: ApiQuery<Product[]> = {
-  loading: true,
-  error: undefined,
-  data: [],
-};
+import { Product } from '../models/product.model';
 
 @Injectable()
 export class ProductBehaviorService {
-  private productSource = new BehaviorSubject<ApiQuery<Product[]>>(defaultState);
-  products$ = this.productSource.asObservable();
+  private http = inject(HttpClient);
+
+  private productBS = new BehaviorSubject<AsyncState<Product[]>>({
+    loading: true,
+    error: null,
+    data: [],
+  });
+  productsState$ = this.productBS.asObservable();
 
   get state() {
-    return this.productSource.getValue();
+    return this.productBS.getValue();
   }
 
-  constructor(private http: HttpClient) {}
-
-  setProducts(fn: (state: ApiQuery<Product[]>) => Partial<ApiQuery<Product[]>>) {
+  setProducts(fn: (state: AsyncState<Product[]>) => Partial<AsyncState<Product[]>>) {
     const newState = fn(this.state);
-    this.productSource.next({ ...this.state, ...newState });
+    this.productBS.next({ ...this.state, ...newState });
   }
 
   getProducts(): Observable<Product[]> {
-    this.productSource.next({ ...this.state, loading: true });
+    this.productBS.next({ ...this.state, loading: true });
 
     // return this.http.get<Product[]>('/api/products').pipe(
     return of([
@@ -46,14 +45,14 @@ export class ProductBehaviorService {
     ]).pipe(
       delay(1000),
       tap(products =>
-        this.productSource.next({
+        this.productBS.next({
           ...this.state,
           data: products,
           loading: false,
         }),
       ),
       catchError(error => {
-        this.productSource.next({
+        this.productBS.next({
           ...this.state,
           error,
           loading: false,
@@ -73,6 +72,7 @@ export class ProductBehaviorService {
     );
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   deleteProduct(product: Product) {
     // return this.http.delete<Product>(`/api/products/${product.id}`).pipe(
     return of(null).pipe(

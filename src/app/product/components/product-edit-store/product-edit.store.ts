@@ -1,10 +1,11 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { ComponentStore, tapResponse } from '@ngrx/component-store';
-import { HttpErrorResponse } from '@angular/common/http';
-import { ProductStoreService } from '../../services/product-store.service';
-import { ProductListStore } from '../product-list-store/product-list.store';
 import { Observable, switchMap, tap } from 'rxjs';
+
 import { Product } from '../../models/product.model';
+import { ProductService } from '../../services/product.service';
+import { ProductListStore } from '../product-list-store/product-list.store';
 
 export interface ProductEditState {
   loading: boolean;
@@ -20,7 +21,10 @@ const initialState: ProductEditState = {
 
 @Injectable()
 export class ProductEditStore extends ComponentStore<ProductEditState> {
-  constructor(private productService: ProductStoreService, private listStore: ProductListStore) {
+  constructor(
+    private productService: ProductService,
+    private listStore: ProductListStore,
+  ) {
     super(initialState);
   }
 

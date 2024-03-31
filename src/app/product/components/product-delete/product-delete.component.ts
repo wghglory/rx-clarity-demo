@@ -1,7 +1,8 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
-import { Product } from '../../models/product.model';
+import { createAsyncState } from 'ngx-extension';
 import { EMPTY, share, Subject, switchMap, tap } from 'rxjs';
-import { api } from '@shared/operators/api.operator';
+
+import { Product } from '../../models/product.model';
 import { ProductService } from '../../services/product.service';
 
 @Component({
@@ -23,9 +24,9 @@ export class ProductDeleteComponent {
   @Input() open = false;
   @Output() openChange = new EventEmitter<boolean>();
 
-  private saveSubject = new Subject<void>();
+  private saveAction = new Subject<void>();
 
-  delete$ = this.saveSubject.pipe(
+  confirmState$ = this.saveAction.pipe(
     switchMap(() => {
       const selected = this.selected;
 
@@ -38,7 +39,7 @@ export class ProductDeleteComponent {
           this.productService.setProduct({ type: 'delete', product: selected });
           this.close();
         }),
-        api(),
+        createAsyncState(),
       );
     }),
     share(),
@@ -49,6 +50,6 @@ export class ProductDeleteComponent {
   }
 
   confirm() {
-    this.saveSubject.next();
+    this.saveAction.next();
   }
 }

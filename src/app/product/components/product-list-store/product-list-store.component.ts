@@ -1,4 +1,5 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+
 import { Product } from '../../models/product.model';
 import { ProductListStore } from './product-list.store';
 
@@ -32,10 +33,6 @@ export class ProductListStoreComponent implements OnInit {
   deleteProduct(selected: Product) {
     this.openDeleteDialog = true;
     this.selected = selected;
-  }
-
-  trackByFn(index: number, item: Product) {
-    return item.id;
   }
 
   ngOnInit() {

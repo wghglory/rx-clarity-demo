@@ -1,4 +1,5 @@
 import { ChangeDetectionStrategy, Component, Input, Output } from '@angular/core';
+
 import { Product } from '../../models/product.model';
 import { ProductDeleteStore } from './product-delete.store';
 

@@ -1,9 +1,10 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { ComponentStore, tapResponse } from '@ngrx/component-store';
-import { HttpErrorResponse } from '@angular/common/http';
-import { ProductStoreService } from '../../services/product-store.service';
 import { Observable, switchMap, tap } from 'rxjs';
+
 import { Product } from '../../models/product.model';
+import { ProductService } from '../../services/product.service';
 import { ProductListStore } from '../product-list-store/product-list.store';
 
 export interface ProductDeleteState {
@@ -20,7 +21,10 @@ const initialState: ProductDeleteState = {
 
 @Injectable()
 export class ProductDeleteStore extends ComponentStore<ProductDeleteState> {
-  constructor(private productService: ProductStoreService, private listStore: ProductListStore) {
+  constructor(
+    private productService: ProductService,
+    private listStore: ProductListStore,
+  ) {
     super(initialState);
   }
 

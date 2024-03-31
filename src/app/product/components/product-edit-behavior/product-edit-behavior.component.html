@@ -5,10 +5,12 @@
       Are you sure update product <strong>{{ selected?.name }}</strong> date {{ selected?.lastModified }} ?
     </p>
 
-    <app-alert data-testid="alert" *ngIf="(update$ | async)?.error as error" [error]="error"></app-alert>
+    <clx-alert *ngIf="(confirmState$ | async)?.error as error" [error]="error" />
   </div>
   <div class="modal-footer">
     <button type="button" class="btn btn-outline" (click)="close()">Cancel</button>
-    <button type="button" class="btn btn-primary" [clrLoading]="(update$ | async)?.loading === true" (click)="confirm()">Confirm</button>
+    <button type="button" class="btn btn-primary" [clrLoading]="(confirmState$ | async)?.loading === true" (click)="confirm()">
+      Confirm
+    </button>
   </div>
 </clr-modal>

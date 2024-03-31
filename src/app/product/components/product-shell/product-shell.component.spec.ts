@@ -8,9 +8,8 @@ describe('ProductShellComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ProductShellComponent ]
-    })
-    .compileComponents();
+      declarations: [ProductShellComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(ProductShellComponent);
     component = fixture.componentInstance;

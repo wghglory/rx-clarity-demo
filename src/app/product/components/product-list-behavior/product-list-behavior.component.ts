@@ -1,6 +1,7 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { ProductBehaviorService } from '../../services/product-behavior.service';
+
 import { Product } from '../../models/product.model';
+import { ProductBehaviorService } from '../../services/product-behavior.service';
 
 @Component({
   selector: 'app-product-list-behavior',
@@ -18,7 +19,7 @@ export class ProductListBehaviorComponent {
 
   trigger$ = this.productService.getProducts();
 
-  products$ = this.productService.products$;
+  productsState$ = this.productService.productsState$;
 
   editProduct(selected: Product) {
     this.openEditDialog = true;
@@ -28,9 +29,5 @@ export class ProductListBehaviorComponent {
   deleteProduct(selected: Product) {
     this.openDeleteDialog = true;
     this.selected = selected;
-  }
-
-  trackByFn(index: number, item: Product) {
-    return item.id;
   }
 }

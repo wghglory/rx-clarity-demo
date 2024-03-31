@@ -1,7 +1,8 @@
-import { Product } from '../../models/product.model';
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
-import { api } from '@shared/operators/api.operator';
+import { createAsyncState } from 'ngx-extension';
 import { share, Subject, switchMap, tap } from 'rxjs';
+
+import { Product } from '../../models/product.model';
 import { ProductBehaviorService } from '../../services/product-behavior.service';
 
 @Component({
@@ -17,9 +18,9 @@ export class ProductDeleteBehaviorComponent {
   @Input() open = false;
   @Output() openChange = new EventEmitter<boolean>();
 
-  private saveSubject = new Subject<void>();
+  private saveAction = new Subject<void>();
 
-  delete$ = this.saveSubject.pipe(
+  confirmState$ = this.saveAction.pipe(
     switchMap(() =>
       this.productService.deleteProduct(this.selected!).pipe(
         tap(() => {
@@ -28,12 +29,10 @@ export class ProductDeleteBehaviorComponent {
               return item.id !== this.selected?.id;
             });
 
-            this.close();
-
             return { ...state, data };
           });
         }),
-        api(),
+        createAsyncState(() => this.close()),
       ),
     ),
     share(),
@@ -44,6 +43,6 @@ export class ProductDeleteBehaviorComponent {
   }
 
   confirm() {
-    this.saveSubject.next();
+    this.saveAction.next();
   }
 }

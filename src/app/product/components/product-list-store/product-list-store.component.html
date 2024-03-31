@@ -1,25 +1,31 @@
 <p cds-text class="my-6 text-2xl">GET collection and mutate one without refetch. Using Component store to store list</p>
 
-<ng-container *ngIf="vm$ | async as apiResult">
-  <app-spinner *ngIf="apiResult.loading"></app-spinner>
+<ng-container *ngIf="vm$ | async as productsState">
+  @if (productsState.loading) {
+    <clx-spinner />
+  }
 
-  <div class="grid grid-cols-3 gap-6">
-    <div *ngFor="let product of apiResult.products; trackBy: trackByFn" class="card mt-0 flex flex-col">
-      <h3 class="card-header">
-        {{ product.name }}
-      </h3>
-      <div class="card-block flex-1">
-        <p cds-text>{{ product.description }}</p>
-        <time>{{ product.lastModified | date : 'full' }}</time>
-      </div>
-      <div class="card-footer">
-        <button class="btn btn-sm btn-link" (click)="editProduct(product)">Edit</button>
-        <button class="btn btn-sm btn-link" (click)="deleteProduct(product)">Delete</button>
+  @if (productsState.error; as error) {
+    <clx-alert [error]="error" class="mb-4" />
+  }
+
+  @if (productsState.products; as products) {
+    <div class="grid grid-cols-3 gap-6">
+      <div *ngFor="let product of products" class="card mt-0 flex flex-col">
+        <h3 class="card-header">
+          {{ product.name }}
+        </h3>
+        <div class="card-block flex-1">
+          <p cds-text>{{ product.description }}</p>
+          <time>{{ product.lastModified | date: 'full' }}</time>
+        </div>
+        <div class="card-footer">
+          <button class="btn btn-sm btn-link" (click)="editProduct(product)">Edit</button>
+          <button class="btn btn-sm btn-link" (click)="deleteProduct(product)">Delete</button>
+        </div>
       </div>
     </div>
-  </div>
-
-  <app-alert *ngIf="apiResult.error" [error]="apiResult.error" class="mb-4"></app-alert>
+  }
 </ng-container>
 
 <!-- ----------------------------------- modal----------------------------------- -->

@@ -5,10 +5,14 @@
       Are you sure delete product <strong>{{ selected?.name }}</strong> date {{ selected?.lastModified }} ?
     </p>
 
-    <app-alert data-testid="alert" *ngIf="(delete$ | async)?.error as error" [error]="error"></app-alert>
+    @if ((confirmState$ | async)?.error; as error) {
+      <clx-alert [error]="error" />
+    }
   </div>
   <div class="modal-footer">
     <button type="button" class="btn btn-outline" (click)="close()">Cancel</button>
-    <button type="button" class="btn btn-primary" [clrLoading]="(delete$ | async)?.loading === true" (click)="confirm()">Confirm</button>
+    <button type="button" class="btn btn-primary" [clrLoading]="(confirmState$ | async)?.loading === true" (click)="confirm()">
+      Confirm
+    </button>
   </div>
 </clr-modal>
