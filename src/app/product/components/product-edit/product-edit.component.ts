@@ -1,6 +1,6 @@
-import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, inject, Input, Output } from '@angular/core';
 import { createAsyncState } from 'ngx-extension';
-import { EMPTY, share, Subject, switchMap, tap } from 'rxjs';
+import { share, Subject, switchMap, tap } from 'rxjs';
 
 import { Product } from '../../models/product.model';
 import { ProductService } from '../../services/product.service';
@@ -18,23 +18,17 @@ import { ProductService } from '../../services/product.service';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ProductEditComponent {
-  constructor(public productService: ProductService) {}
+  private productService = inject(ProductService);
 
-  @Input() selected: Product | undefined = undefined;
-  @Input() open = false;
+  @Input({ required: true }) selected!: Product;
+  @Input({ required: true }) open = false;
   @Output() openChange = new EventEmitter<boolean>();
 
   private saveAction = new Subject<void>();
 
   confirmState$ = this.saveAction.pipe(
     switchMap(() => {
-      const selected = this.selected;
-
-      if (!selected) {
-        return EMPTY;
-      }
-
-      return this.productService.updateProduct(selected).pipe(
+      return this.productService.updateProduct(this.selected).pipe(
         tap(product => {
           this.close();
           this.productService.setProduct({ type: 'update', product });
@@ -42,7 +36,7 @@ export class ProductEditComponent {
         createAsyncState(),
       );
     }),
-    share(),
+    share(), // API executes multiple times without share
   );
 
   close() {

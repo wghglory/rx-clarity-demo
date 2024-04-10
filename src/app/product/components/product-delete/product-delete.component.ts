@@ -1,6 +1,7 @@
-import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, input, model } from '@angular/core';
+import { toSignal } from '@angular/core/rxjs-interop';
 import { createAsyncState } from 'ngx-extension';
-import { EMPTY, share, Subject, switchMap, tap } from 'rxjs';
+import { share, Subject, switchMap } from 'rxjs';
 
 import { Product } from '../../models/product.model';
 import { ProductService } from '../../services/product.service';
@@ -18,35 +19,30 @@ import { ProductService } from '../../services/product.service';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ProductDeleteComponent {
-  constructor(public productService: ProductService) {}
+  private productService = inject(ProductService);
 
-  @Input() selected: Product | undefined = undefined;
-  @Input() open = false;
-  @Output() openChange = new EventEmitter<boolean>();
+  selected = input.required<Product>();
+  open = model(false);
 
   private saveAction = new Subject<void>();
 
   confirmState$ = this.saveAction.pipe(
     switchMap(() => {
-      const selected = this.selected;
-
-      if (!selected) {
-        return EMPTY;
-      }
+      const selected = this.selected();
 
       return this.productService.deleteProduct(selected).pipe(
-        tap(() => {
+        createAsyncState(() => {
           this.productService.setProduct({ type: 'delete', product: selected });
           this.close();
         }),
-        createAsyncState(),
       );
     }),
-    share(),
+    // share(),  // API executes only once even without share thanks to signal!
   );
+  confirmState = toSignal(this.confirmState$);
 
   close() {
-    this.openChange.emit(false);
+    this.open.set(false);
   }
 
   confirm() {

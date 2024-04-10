@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { isEmpty } from 'lodash-es';
 import { AsyncState, createAsyncState } from 'ngx-extension';
 import { combineLatest, scan, shareReplay } from 'rxjs';
@@ -20,7 +20,7 @@ import { ProductService } from '../../services/product.service';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ProductListComponent {
-  constructor(public productService: ProductService) {}
+  private productService = inject(ProductService);
 
   openEditDialog = false;
   openDeleteDialog = false;
@@ -55,12 +55,12 @@ export class ProductListComponent {
   );
 
   editProduct(selected: Product) {
-    this.openEditDialog = true;
     this.selected = selected;
+    this.openEditDialog = true;
   }
 
   deleteProduct(selected: Product) {
-    this.openDeleteDialog = true;
     this.selected = selected;
+    this.openDeleteDialog = true;
   }
 }

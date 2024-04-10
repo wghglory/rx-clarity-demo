@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { BehaviorSubject, delay, Observable, of } from 'rxjs';
+import { BehaviorSubject, delay, map, Observable, of } from 'rxjs';
 
 import { Product } from '../models/product.model';
 
@@ -37,23 +37,28 @@ export class ProductService {
   }
 
   updateProduct(product: Product) {
+    return this.http.get(`https://randomuser.me/api/`).pipe(map(() => ({ ...product, lastModified: new Date() })));
+
     // return this.http.patch<Product>(`/api/products/${product.id}`, product).pipe(
-    return of<Product>({ ...product, lastModified: new Date() }).pipe(
-      delay(1000),
-      // concatMap(() => {
-      //   throw new Error('error handling');
-      // }),
-    );
+
+    // return of<Product>({ ...product, lastModified: new Date() }).pipe(
+    //   delay(1000),
+    //   // concatMap(() => {
+    //   //   throw new Error('error handling');
+    //   // }),
+    // );
   }
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   deleteProduct(product: Product) {
+    return this.http.get(`https://randomuser.me/api/`).pipe(map(() => null));
+
     // return this.http.delete<Product>(`/api/products/${product.id}`).pipe(
-    return of(null).pipe(
-      delay(1000),
-      // concatMap(() => {
-      //   throw new Error('error handling');
-      // }),
-    );
+    // return of(null).pipe(
+    //   delay(1000),
+    //   // concatMap(() => {
+    //   //   throw new Error('error handling');
+    //   // }),
+    // );
   }
 }

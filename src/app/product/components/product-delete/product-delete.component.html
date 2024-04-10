@@ -2,17 +2,15 @@
   <h3 class="modal-title">Delete Product</h3>
   <div class="modal-body">
     <p cds-text>
-      Are you sure delete product <strong>{{ selected?.name }}</strong> date {{ selected?.lastModified }} ?
+      Are you sure delete product <strong>{{ selected().name }}</strong> date {{ selected().lastModified }} ?
     </p>
 
-    @if ((confirmState$ | async)?.error; as error) {
+    @if (confirmState()?.error; as error) {
       <clx-alert [error]="error" />
     }
   </div>
   <div class="modal-footer">
     <button type="button" class="btn btn-outline" (click)="close()">Cancel</button>
-    <button type="button" class="btn btn-primary" [clrLoading]="(confirmState$ | async)?.loading === true" (click)="confirm()">
-      Confirm
-    </button>
+    <button type="button" class="btn btn-primary" [clrLoading]="confirmState()?.loading === true" (click)="confirm()">Confirm</button>
   </div>
 </clr-modal>

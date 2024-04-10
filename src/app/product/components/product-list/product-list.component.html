@@ -31,5 +31,5 @@
 </ng-container>
 
 <!-- ----------------------------------- modal----------------------------------- -->
-<app-product-edit *ngIf="openEditDialog" [(open)]="openEditDialog" [selected]="selected"></app-product-edit>
-<app-product-delete *ngIf="openDeleteDialog" [(open)]="openDeleteDialog" [selected]="selected"></app-product-delete>
+<app-product-edit *ngIf="openEditDialog && selected" [(open)]="openEditDialog" [selected]="selected"></app-product-edit>
+<app-product-delete *ngIf="openDeleteDialog && selected" [(open)]="openDeleteDialog" [selected]="selected"></app-product-delete>
