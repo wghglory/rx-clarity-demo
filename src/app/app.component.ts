@@ -1,10 +1,12 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
-import { ClarityIcons, vmBugIcon } from '@cds/core/icon';
+import { ClarityIcons, shoppingCartIcon, vmBugIcon } from '@cds/core/icon';
 import { ClarityModule } from '@clr/angular';
 
-ClarityIcons.addIcons(vmBugIcon);
+import { CartSignalService } from './vehicle/components/cart-signal/cart-signal.service';
+
+ClarityIcons.addIcons(vmBugIcon, shoppingCartIcon);
 
 @Component({
   selector: 'app-root',
@@ -14,5 +16,7 @@ ClarityIcons.addIcons(vmBugIcon);
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent {
-  title = 'rx-clarity-template';
+  private cartService = inject(CartSignalService);
+
+  quantities = this.cartService.quantities;
 }

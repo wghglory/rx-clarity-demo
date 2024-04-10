@@ -10,6 +10,15 @@
       <a class="nav-link" routerLink="/vehicles" routerLinkActive="active"><span class="nav-text">Vehicles</span></a>
       <a class="nav-link" routerLink="/products" routerLinkActive="active"><span class="nav-text">Products</span></a>
     </div>
+    <div class="settings">
+      <a href="javascript://" class="nav-link nav-icon">
+        <cds-icon shape="shopping-cart"></cds-icon>
+        <span class="label label-orange text-white">
+          Signal Cart:
+          <span class="badge badge-purple">{{ quantities() }}</span>
+        </span>
+      </a>
+    </div>
   </header>
 
   <div class="content-container">

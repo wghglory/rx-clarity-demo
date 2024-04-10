@@ -9,6 +9,8 @@ import { CartItem } from '../cart/cart.model';
 export class CartSignalService {
   cartItems = signal<CartItem[]>([]);
 
+  quantities = computed(() => this.cartItems().reduce((accu, curr) => accu + curr.quantity, 0));
+
   // Total up the extended price for each item
   subTotal = computed(() => this.cartItems().reduce((a, b) => a + b.quantity * Number(b.vehicle.cost_in_credits), 0));
 
