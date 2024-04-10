@@ -31,8 +31,8 @@
 </ng-container>
 
 <!-- ----------------------------------- modal----------------------------------- -->
-<app-product-edit-behavior *ngIf="openEditDialog" [(open)]="openEditDialog" [selected]="selected"></app-product-edit-behavior>
-<app-product-delete-behavior *ngIf="openDeleteDialog" [(open)]="openDeleteDialog" [selected]="selected"></app-product-delete-behavior>
+<app-product-edit-behavior *ngIf="openEditDialog && selected" [(open)]="openEditDialog" [selected]="selected" />
+<app-product-delete-behavior *ngIf="openDeleteDialog && selected" [(open)]="openDeleteDialog" [selected]="selected" />
 
 <!-- ----------------------------------- api----------------------------------- -->
 <ng-container *ngIf="trigger$ | async"></ng-container>

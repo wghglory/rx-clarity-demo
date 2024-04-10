@@ -11,12 +11,13 @@ import { ProductBehaviorService } from '../../services/product-behavior.service'
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ProductListBehaviorComponent {
-  constructor(public productService: ProductBehaviorService) {}
+  constructor(private productService: ProductBehaviorService) {}
 
   openEditDialog = false;
   openDeleteDialog = false;
   selected: Product | undefined;
 
+  // imperative pattern: Demo of 2 streams not explicitly related
   trigger$ = this.productService.getProducts();
 
   productsState$ = this.productService.productsState$;

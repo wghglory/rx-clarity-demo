@@ -9,6 +9,7 @@ import { Product } from '../models/product.model';
 export class ProductBehaviorService {
   private http = inject(HttpClient);
 
+  // use the behaviorSubject to hold the state, like the regular manual subscription way
   private productBS = new BehaviorSubject<AsyncState<Product[]>>({
     loading: true,
     error: null,
