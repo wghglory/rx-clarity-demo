@@ -2,11 +2,11 @@
 
 <ng-container *ngIf="productsState$ | async as productsState">
   @if (productsState.loading) {
-    <clx-spinner />
+    <cll-spinner />
   }
 
   @if (productsState.error; as error) {
-    <clx-alert [error]="error" class="mb-4" />
+    <cll-alert [error]="error" class="mb-4" />
   }
 
   @if (productsState.data; as products) {

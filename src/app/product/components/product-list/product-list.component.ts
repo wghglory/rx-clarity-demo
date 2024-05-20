@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { isEmpty } from 'lodash-es';
-import { AsyncState, createAsyncState } from 'ngx-extension';
+import { AsyncState, createAsyncState } from 'ngx-lift';
 import { combineLatest, scan, shareReplay } from 'rxjs';
 
 import { Product } from '../../models/product.model';

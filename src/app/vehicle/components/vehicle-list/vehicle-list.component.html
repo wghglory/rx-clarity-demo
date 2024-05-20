@@ -40,7 +40,7 @@
     </clr-datagrid>
 
     @if ((vehiclesState$ | async)?.error; as error) {
-      <clx-alert [error]="error" />
+      <cll-alert [error]="error" />
     }
   </section>
 

@@ -3,7 +3,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { ClarityModule } from '@clr/angular';
-import { AlertComponent, SpinnerComponent } from 'clr-extension';
+import { AlertComponent, SpinnerComponent } from 'clr-lift';
 
 import { ProductDeleteComponent } from './components/product-delete/product-delete.component';
 import { ProductDeleteBehaviorComponent } from './components/product-delete-behavior/product-delete-behavior.component';

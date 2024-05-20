@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, inject, input, model } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
-import { createAsyncState } from 'ngx-extension';
+import { createAsyncState } from 'ngx-lift';
 import { share, Subject, switchMap } from 'rxjs';
 
 import { Product } from '../../models/product.model';

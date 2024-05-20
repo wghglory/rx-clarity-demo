@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, inject, Input, Output } from '@angular/core';
-import { createAsyncState } from 'ngx-extension';
+import { createAsyncState } from 'ngx-lift';
 import { share, Subject, switchMap, tap } from 'rxjs';
 
 import { Product } from '../../models/product.model';

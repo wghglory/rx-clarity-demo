@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { AsyncState } from 'ngx-extension';
+import { AsyncState } from 'ngx-lift';
 import { BehaviorSubject, catchError, delay, EMPTY, Observable, of, tap } from 'rxjs';
 
 import { Product } from '../models/product.model';
