@@ -1,0 +1,21 @@
+<section class="space-y-6">
+  <h2>Todos</h2>
+
+  @if (todosState().loading) {
+    <cll-spinner />
+  }
+  @if (todosState().error; as error) {
+    <cll-alert [error]="error" />
+  }
+
+  @if (todosState().data; as todos) {
+    <ul class="p-2">
+      @for (todo of todos; track todo.id) {
+        <li class="flex flex-col border-t last:border-b p-2 gap-2">
+          <strong>{{ todo.title }}</strong>
+          <span>completed: {{ todo.completed }}</span>
+        </li>
+      }
+    </ul>
+  }
+</section>

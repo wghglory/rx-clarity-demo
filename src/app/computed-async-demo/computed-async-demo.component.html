@@ -1,0 +1,32 @@
+<clr-tabs>
+  <clr-tab>
+    <button clrTabLink>Params Change</button>
+    <clr-tab-content *clrIfActive>
+      <div class="flex gap-10">
+        <app-user-list />
+        <router-outlet />
+      </div>
+    </clr-tab-content>
+  </clr-tab>
+
+  <clr-tab>
+    <button clrTabLink>model change</button>
+    <clr-tab-content *clrIfActive>
+      <div class="space-y-10">
+        <clr-select-container>
+          <label for="userSelect">Select User</label>
+          <select clrSelect [(ngModel)]="selectedUserId" id="userSelect">
+            <option disabled>Select user Id</option>
+            @for (id of userIds(); track id) {
+              <option [value]="id">{{ id }}</option>
+            }
+          </select>
+        </clr-select-container>
+
+        @if (selectedUserId()) {
+          <app-user-detail [id]="selectedUserId()" />
+        }
+      </div>
+    </clr-tab-content>
+  </clr-tab>
+</clr-tabs>

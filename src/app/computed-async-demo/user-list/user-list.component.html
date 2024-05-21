@@ -1,0 +1,23 @@
+<section class="space-y-6">
+  <h2>Users</h2>
+
+  @if (usersState().loading) {
+    <cll-spinner />
+  }
+  @if (usersState().error; as error) {
+    <cll-alert [error]="error" />
+  }
+
+  @if (usersState().data; as users) {
+    <ul class="p-2">
+      @for (user of users; track user.id) {
+        <li class="flex flex-col border-t last:border-b p-2 gap-2">
+          <a [routerLink]="[user.id]" routerLinkActive="!text-red-500">
+            <strong>{{ user.name }}</strong>
+          </a>
+          <span>{{ user.email }}</span>
+        </li>
+      }
+    </ul>
+  }
+</section>
