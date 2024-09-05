@@ -26,9 +26,9 @@
     "@clr/angular": "^17.2.0",
     "@clr/ui": "^17.2.0",
     "@ngrx/component-store": "^17.1.1",
-    "clr-lift": "^1.0.0",
+    "clr-lift": "^1.7.1",
     "lodash-es": "^4.17.21",
-    "ngx-lift": "^1.1.0",
+    "ngx-lift": "^1.7.1",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.14.6"
